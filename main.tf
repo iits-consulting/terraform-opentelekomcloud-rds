@@ -63,6 +63,7 @@ resource "opentelekomcloud_rds_instance_v3" "db_instance" {
     size               = var.db_size
   }
   backup_strategy {
+    period     = var.db_backup_period
     start_time = var.db_backup_interval
     keep_days  = var.db_backup_days
   }

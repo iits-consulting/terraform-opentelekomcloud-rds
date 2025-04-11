@@ -46,7 +46,7 @@ module "rds" {
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
 | <a name="requirement_errorcheck"></a> [errorcheck](#requirement\_errorcheck) | 3.0.3 |
-| <a name="requirement_opentelekomcloud"></a> [opentelekomcloud](#requirement\_opentelekomcloud) | ~> 1.32 |
+| <a name="requirement_opentelekomcloud"></a> [opentelekomcloud](#requirement\_opentelekomcloud) | >= 1.36.35 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.0 |
 
 ## Providers
@@ -54,7 +54,7 @@ module "rds" {
 | Name | Version |
 |------|---------|
 | <a name="provider_errorcheck"></a> [errorcheck](#provider\_errorcheck) | 3.0.3 |
-| <a name="provider_opentelekomcloud"></a> [opentelekomcloud](#provider\_opentelekomcloud) | ~> 1.32 |
+| <a name="provider_opentelekomcloud"></a> [opentelekomcloud](#provider\_opentelekomcloud) | >= 1.36.35 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.0 |
 
 ## Modules
@@ -95,8 +95,9 @@ No modules.
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | Id of the subnet to create database cluster in. | `string` | n/a | yes |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | Id of the VPC to create database cluster in. | `string` | n/a | yes |
 | <a name="input_db_availability_zones"></a> [db\_availability\_zones](#input\_db\_availability\_zones) | Availability zones for the RDS instance. One or two zones are supported for single and primary/standby instances respectively. | `set(string)` | `[]` | no |
-| <a name="input_db_backup_days"></a> [db\_backup\_days](#input\_db\_backup\_days) | Retain time for automated backups in days. (default: 7) | `number` | `"7"` | no |
+| <a name="input_db_backup_days"></a> [db\_backup\_days](#input\_db\_backup\_days) | Retain time for automated backups in days. | `number` | `"7"` | no |
 | <a name="input_db_backup_interval"></a> [db\_backup\_interval](#input\_db\_backup\_interval) | UTC time window for automated database backups in "HH:MM-HH:MM" format. Must be at least 1 hour (default: 03:00-04:00) | `string` | `"03:00-04:00"` | no |
+| <a name="input_db_backup_period"></a> [db\_backup\_period](#input\_db\_backup\_period) | Specifies the backup cycle configuration. The value is digits separated by commas (,), indicating the day of the week and starting from Monday=1. | `string` | `"1,2,3,4,5,6,7"` | no |
 | <a name="input_db_cpu_alarm_threshold"></a> [db\_cpu\_alarm\_threshold](#input\_db\_cpu\_alarm\_threshold) | CES alarm threshold (in percent) for database cpu utilization. Can be disabled by setting to 0. | `number` | `80` | no |
 | <a name="input_db_cpus"></a> [db\_cpus](#input\_db\_cpus) | Number of CPU cores desired for database nodes. (default: 2) | `string` | `"2"` | no |
 | <a name="input_db_eip_bandwidth"></a> [db\_eip\_bandwidth](#input\_db\_eip\_bandwidth) | Bandwidth of the EIP of RDS instance, can be disabled by setting to 0. (default: 0) | `number` | `0` | no |

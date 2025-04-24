@@ -173,9 +173,15 @@ variable "db_storage_type" {
   default     = "ULTRAHIGH"
 }
 
+variable "db_backup_period" {
+  type        = string
+  description = "Specifies the backup cycle configuration. The value is digits separated by commas (,), indicating the day of the week and starting from Monday=1."
+  default     = "1,2,3,4,5,6,7"
+}
+
 variable "db_backup_days" {
   type        = number
-  description = "Retain time for automated backups in days. (default: 7)"
+  description = "Retain time for automated backups in days."
   default     = "7"
 }
 

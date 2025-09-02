@@ -169,8 +169,8 @@ variable "db_size" {
 
 variable "db_storage_type" {
   type        = string
-  description = "Type of storage desired for the database. (default: ULTRAHIGH)"
-  default     = "ULTRAHIGH"
+  description = "Type of storage desired for the database. (default: CLOUDSSD)"
+  default     = "CLOUDSSD"
 }
 
 variable "db_backup_period" {

@@ -173,6 +173,34 @@ variable "db_storage_type" {
   default     = "CLOUDSSD"
 }
 
+variable "db_limit_size" {
+  type        = number
+  description = "Upper limit for automatic storage expansion (autoscaling) of the database in GB. Setting this parameter enables storage autoscaling and db_size will only be used as the initial storage size. Must be between 40 and 4000 GB and no less than db_size. (default: null / autoscaling disabled)"
+  default     = null
+  validation {
+    condition     = var.db_limit_size == null ? true : var.db_limit_size >= 40 && var.db_limit_size <= 4000
+    error_message = "Parameter db_limit_size must be between 40 and 4000 GB!"
+  }
+}
+
+variable "db_trigger_threshold" {
+  type        = number
+  description = "Threshold of available storage (in percent) to trigger automatic storage expansion. Only takes effect when db_limit_size is set. Valid values are: 10, 15 and 20. (default: 20)"
+  default     = 20
+  validation {
+    condition     = contains([10, 15, 20], var.db_trigger_threshold)
+    error_message = "Parameter db_trigger_threshold must be one of: 10, 15 or 20!"
+  }
+}
+
+resource "errorcheck_is_valid" "db_limit_size_constraint" {
+  name = "Check if db_limit_size is no less than db_size."
+  test = {
+    assert        = var.db_limit_size == null ? true : var.db_limit_size >= var.db_size
+    error_message = "ERROR! Parameter db_limit_size must be no less than db_size (${var.db_size} GB)."
+  }
+}
+
 variable "db_backup_period" {
   type        = string
   description = "Specifies the backup cycle configuration. The value is digits separated by commas (,), indicating the day of the week and starting from Monday=1."

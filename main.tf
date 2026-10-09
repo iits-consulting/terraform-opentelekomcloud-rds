@@ -61,6 +61,8 @@ resource "opentelekomcloud_rds_instance_v3" "db_instance" {
     disk_encryption_id = var.db_volume_encryption ? (var.db_volume_encryption_key_name == null ? opentelekomcloud_kms_key_v1.db_encryption_key[0].id : data.opentelekomcloud_kms_key_v1.db_encryption_existing_key[0].id) : null
     type               = var.db_storage_type
     size               = var.db_size
+    limit_size         = var.db_limit_size
+    trigger_threshold  = var.db_limit_size == null ? null : var.db_trigger_threshold
   }
   backup_strategy {
     period     = var.db_backup_period
@@ -75,6 +77,7 @@ resource "opentelekomcloud_rds_instance_v3" "db_instance" {
   depends_on = [
     errorcheck_is_valid.db_flavor_constraint,
     errorcheck_is_valid.db_ha_replication_mode_constraint,
+    errorcheck_is_valid.db_limit_size_constraint,
     data.opentelekomcloud_rds_flavors_v3.db_flavor,
   ]
 }

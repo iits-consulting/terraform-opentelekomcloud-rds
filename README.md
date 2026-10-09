@@ -68,6 +68,7 @@ No modules.
 | [errorcheck_is_valid.db_availability_zones](https://registry.terraform.io/providers/iits-consulting/errorcheck/3.0.3/docs/resources/is_valid) | resource |
 | [errorcheck_is_valid.db_flavor_constraint](https://registry.terraform.io/providers/iits-consulting/errorcheck/3.0.3/docs/resources/is_valid) | resource |
 | [errorcheck_is_valid.db_ha_replication_mode_constraint](https://registry.terraform.io/providers/iits-consulting/errorcheck/3.0.3/docs/resources/is_valid) | resource |
+| [errorcheck_is_valid.db_limit_size_constraint](https://registry.terraform.io/providers/iits-consulting/errorcheck/3.0.3/docs/resources/is_valid) | resource |
 | [opentelekomcloud_ces_alarmrule.db_ces_alarms](https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/ces_alarmrule) | resource |
 | [opentelekomcloud_kms_key_v1.db_encryption_key](https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/kms_key_v1) | resource |
 | [opentelekomcloud_networking_secgroup_rule_v2.db_allow_cidr](https://registry.terraform.io/providers/opentelekomcloud/opentelekomcloud/latest/docs/resources/networking_secgroup_rule_v2) | resource |
@@ -104,6 +105,7 @@ No modules.
 | <a name="input_db_flavor"></a> [db\_flavor](#input\_db\_flavor) | RDS Flavor string override. This parameter will override parameters for db\_cpu, db\_memory and db\_high\_availability. | `string` | `""` | no |
 | <a name="input_db_ha_replication_mode"></a> [db\_ha\_replication\_mode](#input\_db\_ha\_replication\_mode) | RDS data replication mode for instances with high availability (primary/standby) enabled. Defaults are async(MySQL), async(PostgreSQL) and sync(SQLServer) | `string` | `""` | no |
 | <a name="input_db_high_availability"></a> [db\_high\_availability](#input\_db\_high\_availability) | Whether a single db instance or a high available (primary/standby) db instance is desired. (default: false) | `bool` | `false` | no |
+| <a name="input_db_limit_size"></a> [db\_limit\_size](#input\_db\_limit\_size) | Upper limit for automatic storage expansion (autoscaling) of the database in GB. Setting this parameter enables storage autoscaling and db\_size will only be used as the initial storage size. Must be between 40 and 4000 GB and no less than db\_size. (default: null / autoscaling disabled) | `number` | `null` | no |
 | <a name="input_db_memory"></a> [db\_memory](#input\_db\_memory) | Amount of memory desired for database nodes in GB. (default: 4) | `number` | `4` | no |
 | <a name="input_db_memory_alarm_threshold"></a> [db\_memory\_alarm\_threshold](#input\_db\_memory\_alarm\_threshold) | CES alarm threshold (in percent) for database memory utilization. Can be disabled by setting to 0. | `number` | `90` | no |
 | <a name="input_db_parameters"></a> [db\_parameters](#input\_db\_parameters) | A map of additional parameters for the database instance. Check the DB Engine's documentation. | `map(string)` | `{}` | no |
@@ -111,6 +113,7 @@ No modules.
 | <a name="input_db_size"></a> [db\_size](#input\_db\_size) | Amount of storage desired for the database in GB. (default: 100) | `number` | `100` | no |
 | <a name="input_db_storage_alarm_threshold"></a> [db\_storage\_alarm\_threshold](#input\_db\_storage\_alarm\_threshold) | CES alarm threshold (in percent) for database storage utilization. Can be disabled by setting to 0. | `number` | `80` | no |
 | <a name="input_db_storage_type"></a> [db\_storage\_type](#input\_db\_storage\_type) | Type of storage desired for the database. (default: ULTRAHIGH) | `string` | `"ULTRAHIGH"` | no |
+| <a name="input_db_trigger_threshold"></a> [db\_trigger\_threshold](#input\_db\_trigger\_threshold) | Threshold of available storage (in percent) to trigger automatic storage expansion. Only takes effect when db\_limit\_size is set. Valid values are: 10, 15 and 20. (default: 20) | `number` | `20` | no |
 | <a name="input_db_volume_encryption"></a> [db\_volume\_encryption](#input\_db\_volume\_encryption) | Enable OTC KMS volume encryption for the database volumes. (default: true) | `bool` | `true` | no |
 | <a name="input_db_volume_encryption_key_name"></a> [db\_volume\_encryption\_key\_name](#input\_db\_volume\_encryption\_key\_name) | If KMS volume encryption is enabled for the database volumes, use this kms key name instead of creating a new one. (default: null) | `string` | `null` | no |
 | <a name="input_sg_allowed_cidr"></a> [sg\_allowed\_cidr](#input\_sg\_allowed\_cidr) | CIDR ranges that are allowed to connect to the database. (default: <var.subnet\_id.cidr>) | `set(string)` | `[]` | no |

@@ -175,7 +175,7 @@ variable "db_storage_type" {
 
 variable "db_limit_size" {
   type        = number
-  description = "Upper limit for automatic storage expansion (autoscaling) of the database in GB. Setting this parameter enables storage autoscaling and db_size will only be used as the initial storage size. Must be between 40 and 4000 GB and no less than db_size. (default: null / autoscaling disabled)"
+  description = "Upper limit for automatic storage expansion (autoscaling) of the database in GB. Setting this parameter enables storage autoscaling and db_size will only be used as the initial storage size. Must be between 40 and 4000 GB and larger than db_size. (default: null / autoscaling disabled)"
   default     = null
   validation {
     condition     = var.db_limit_size == null ? true : var.db_limit_size >= 40 && var.db_limit_size <= 4000
@@ -194,10 +194,10 @@ variable "db_trigger_threshold" {
 }
 
 resource "errorcheck_is_valid" "db_limit_size_constraint" {
-  name = "Check if db_limit_size is no less than db_size."
+  name = "Check if db_limit_size is larger than db_size."
   test = {
     assert        = var.db_limit_size == null ? true : var.db_limit_size >= var.db_size
-    error_message = "ERROR! Parameter db_limit_size must be no less than db_size (${var.db_size} GB)."
+    error_message = "ERROR! Parameter db_limit_size must be larger than db_size (${var.db_size} GB)."
   }
 }
 

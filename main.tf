@@ -43,7 +43,7 @@ resource "opentelekomcloud_vpc_eip_v1" "db_eip" {
 
 resource "opentelekomcloud_rds_instance_v3" "db_instance" {
   name                = var.name
-  availability_zone   = var.db_high_availability || var.db_flavor != "" ? local.db_availability_zones : [local.db_availability_zones[0]]
+  availability_zone   = var.db_high_availability || endswith(var.db_flavor, ".ha") ? local.db_availability_zones : [local.db_availability_zones[0]]
   flavor              = local.db_flavor
   ha_replication_mode = local.db_ha_replication_mode
   security_group_id   = var.sg_secgroup_id == "" ? opentelekomcloud_networking_secgroup_v2.db_secgroup[0].id : var.sg_secgroup_id

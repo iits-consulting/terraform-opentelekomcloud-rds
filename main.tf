@@ -17,6 +17,8 @@ resource "opentelekomcloud_kms_key_v1" "db_encryption_key" {
   key_description = "${var.name} RDS volume encryption key"
   pending_days    = 7
   is_enabled      = "true"
+  rotation_enabled  = var.db_volume_encryption_key_rotation_interval != null
+  rotation_interval = var.db_volume_encryption_key_rotation_interval
 }
 
 data "opentelekomcloud_kms_key_v1" "db_encryption_existing_key" {

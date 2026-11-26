@@ -12,11 +12,13 @@ resource "random_id" "id" {
 }
 
 resource "opentelekomcloud_kms_key_v1" "db_encryption_key" {
-  count           = var.db_volume_encryption && var.db_volume_encryption_key_name == null ? 1 : 0
-  key_alias       = "${var.name}-${random_id.id[0].hex}"
-  key_description = "${var.name} RDS volume encryption key"
-  pending_days    = 7
-  is_enabled      = "true"
+  count             = var.db_volume_encryption && var.db_volume_encryption_key_name == null ? 1 : 0
+  key_alias         = "${var.name}-${random_id.id[0].hex}"
+  key_description   = "${var.name} RDS volume encryption key"
+  pending_days      = 7
+  is_enabled        = "true"
+  rotation_enabled  = var.db_volume_encryption_key_rotation_interval != null
+  rotation_interval = var.db_volume_encryption_key_rotation_interval
 }
 
 data "opentelekomcloud_kms_key_v1" "db_encryption_existing_key" {

@@ -237,6 +237,17 @@ variable "db_volume_encryption_key_name" {
   default     = null
 }
 
+variable "db_volume_encryption_key_rotation_interval" {
+  # Has no effect if db_volume_encryption is false or an existing key is passed via db_volume_encryption_key_name.
+  type        = number
+  description = "Rotation interval in days (30-365) for the KMS key created by this module. Setting a value enables automatic key rotation. null turns rotation off, also on a key where it was enabled outside of Terraform. Has no effect if db_volume_encryption is false or an existing key is passed via db_volume_encryption_key_name. (default: null)"
+  default     = null
+  validation {
+    condition     = var.db_volume_encryption_key_rotation_interval == null ? true : var.db_volume_encryption_key_rotation_interval >= 30 && var.db_volume_encryption_key_rotation_interval <= 365
+    error_message = "db_volume_encryption_key_rotation_interval not in range 30 <= x <= 365"
+  }
+}
+
 variable "sg_allowed_cidr" {
   type        = set(string)
   description = "CIDR ranges that are allowed to connect to the database. (default: <var.subnet_id.cidr>)"
